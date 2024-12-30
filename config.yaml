@@ -1,0 +1,32 @@
+camera:
+  name: "Canon EOS 80D"             # Kameranın varsayılan adı
+  connection_timeout: 10            # Kamera bağlantısı için maksimum bekleme süresi (saniye)
+  settings:                         # Kamera ayarları
+    iso: 100                        # Varsayılan ISO değeri
+    aperture: "5.6"                 # Varsayılan diyafram açıklığı
+    shutter_speed: "1/125"          # Varsayılan enstantane hızı
+    white_balance: "Auto"           # Beyaz dengesi modu
+    image_format: "RAW"             # Varsayılan görüntü formatı
+
+capture:
+  save_directory: "./images"        # Varsayılan kayıt dizini
+  preview_directory: "./previews"   # Önizlemelerin kayıt dizini
+  retry_attempts: 3                 # Görüntü yakalamada tekrar deneme sayısı
+  retry_delay: 1                    # Görüntü yakalamada yeniden denemeler arası bekleme süresi (saniye)
+
+log_settings:
+  console_level: "ERROR"             # Konsol için log seviyesi
+  file_level: "DEBUG"               # Dosya için log seviyesi
+  log_dir: "./logs"                 # Log dosyalarının kayıt edileceği dizin
+  max_log_size: 5242880             # Maksimum log dosyası boyutu (5 MB)
+  backup_count: 5                   # Log dosyası için yedekleme sayısı
+  log_format: "%(asctime)s - [%(name)s] - %(levelname)s - %(message)s"  # Log formatı
+  date_format: "%Y-%m-%d %H:%M:%S"  # Tarih formatı
+  log_file_name: "rcp_log"          # Log dosyasının varsayılan adı
+  handlers:                         # Kullanılacak log handler'ları
+    console: true
+    file: true
+
+general:
+  max_retries: 5  # Genel olarak tüm işlemler için maksimum tekrar sayısı
+  retry_delay: 2  # Genel olarak işlemler arasında bekleme süresi (saniye)
