@@ -15,6 +15,7 @@ class CameraManager:
 
         # Load configuration
         self.__config = self.__load_config(config_path)
+        self.is_connected = False
         
         # Initialize GPhoto2 context
         self.__context = gp.Context()
@@ -108,6 +109,7 @@ class CameraManager:
             self.__camera.init(self.__context)
             self.__connected_camera_info = selected_camera_info
             self.__logger.info(f'Connected to camera: {selected_camera_info["name"]} at port: {selected_camera_info["port"]}')
+            self.is_connected = True
             return True
 
         except gp.GPhoto2Error as e:
@@ -127,6 +129,7 @@ class CameraManager:
             try:
                 self.__camera.exit(self.__context)
                 self.__logger.info("Camera disconnected.")
+                self.is_connected = False
                 return sdict(True, message="Camera disconnected.")
             except gp.GPhoto2Error as e:
                 self.__logger.error(f"Error during camera disconnection: {e}")
@@ -154,9 +157,17 @@ class CameraManager:
             return sdict(False, message="No camera connected.")
 
         try:
-            summary = self.__camera.get_summary(self.__context)
+            summary = self.__camera.get_summary(self.__context).text
+
+            summary_data = {}
+            for line in summary.split("\n"):
+                print(line)
+                key = line.split(":")[0].replace("\n", "").replace("\t", "")
+                value = line.split(":")[1].replace("\n", "").replace("\t", "") if len(line.split(":")) > 1 else None
+                summary_data[key] = value
+
             self.__logger.info(f"Camera connected at port: {self.__connected_camera_info['port']}")
-            return sdict(True, data={"summary": summary}, message="Camera summary retrieved.")
+            return sdict(True, data={"summary": summary_data}, message="Camera summary retrieved.")
         except gp.GPhoto2Error as e:
             self.__logger.error(f"Error: Unable to retrieve camera summary: {e}")
             return sdict(False, message=f"Error: {e}")
@@ -190,7 +201,7 @@ class CameraManager:
                 return sdict(False, message=f"Configuration error: {config_error}")
 
         except gp.GPhoto2Error as e:
-            error_interpreter = GPhotoErrorInterpret1er(e)
+            error_interpreter = GPhotoErrorInterpreter(e)
             self.__logger.error(f'[{method_name}] GPhoto2 signal error: {error_interpreter.get_error_message()}')
             return sdict(False, message=f"Camera signal error: {error_interpreter.get_error_message()}")
         except Exception as e:

@@ -128,7 +128,7 @@ class ConfigHandler:
 
             current_value = setting.get_value()
             self.__logger.info(f"[{method_name}] Current value of {setting_name} is {current_value}")
-            return sdict(True, data={"value": current_value}, message="Value retrieved successfully")
+            return current_value
 
         except gp.GPhoto2Error as e:
             error_message = GPhotoErrorInterpreter.interpret_error(e)

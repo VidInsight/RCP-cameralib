@@ -33,10 +33,11 @@ def main():
     settings_to_get = {
         'iso': None, 
         'aperture': None, 
-        'shutter_speed': None,
-        'white_balance': None
+        'shutterspeed': None,
+        'whitebalance': None
     }
     multiple_results = config_handler.get_multiple_config_values(settings_to_get)
+
     for setting, result in multiple_results.items():
         if result['success']:
             print(f"{setting.upper()} değeri: {result['data']['value']}")

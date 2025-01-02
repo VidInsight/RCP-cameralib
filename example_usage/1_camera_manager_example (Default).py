@@ -20,6 +20,15 @@ def main():
     else:
         print(f"Failed to get camera summary: {summary_result['message']}")
 
+    # Kameranın özetini al
+    summary_result = camera_manager_default.send_signal()
+    if summary_result["success"]:
+        print(f"\nSignal Sent")
+    else:
+        print(f"Failed to get camera summary: {summary_result['message']}")
+
+
+
     # Kamerayı resetleme
     reset_result = camera_manager_default.reset_camera()
     if reset_result["success"]:
