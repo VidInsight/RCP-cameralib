@@ -1,4 +1,3 @@
-import os
 from src.modules.camera_manager import CameraManager
 
 def main():

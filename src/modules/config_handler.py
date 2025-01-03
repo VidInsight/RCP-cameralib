@@ -1,7 +1,5 @@
-import yaml
-import os
 import gphoto2 as gp
-from typing import Dict, Optional, Any
+from typing import Dict, Any
 
 from src.modules.camera_manager import CameraManager
 from src.utils.rcp_logger import Logger

@@ -1,4 +1,4 @@
-from flask import Flask, send_file, request, jsonify
+from flask import Flask, send_file, request
 import json
 from src.modules.camera_manager import CameraManager
 from src.modules.config_handler import ConfigHandler

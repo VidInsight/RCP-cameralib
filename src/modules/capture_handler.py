@@ -1,7 +1,7 @@
 import time
 import os
 import gphoto2 as gp
-from typing import Optional, Dict, Any
+from typing import Optional
 
 from src.modules.camera_manager import CameraManager
 from src.utils.rcp_logger import Logger

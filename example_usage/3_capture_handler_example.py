@@ -1,5 +1,4 @@
 import os
-import time
 
 from src.modules.camera_manager import CameraManager
 from src.modules.capture_handler import CaptureHandler
