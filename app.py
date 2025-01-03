@@ -18,6 +18,7 @@ config = {
     'whitebalance': None
 }
 
+result = None
 
 @app.route('/api/connect')
 def connect_to_cam():
@@ -53,23 +54,30 @@ def summary_camera():
 
 @app.route('/api/test')
 def test_camera():
+    global result
     if camera_manager.is_connected and camera_capture.wait_until_ready():
         result = camera_capture.capture_preview()
-        path = result["data"]["save_path"]
-        return send_file(path_or_file=path, mimetype="image/jpeg")
-
+        return json.dumps({"status": "success", "message": "Photo captured successfully."})
     else:
         return json.dumps({"status": "error", "message": "Camera is not connected."})
 
 
 @app.route('/api/capture')
 def capture_photo():
+    global result
     if camera_manager.is_connected and camera_capture.wait_until_ready():
         result = camera_capture.capture_image()
+        return json.dumps({"status": "success", "message": "Photo captured successfully."})
+    else:
+        return json.dumps({"status": "error", "message": "Camera is not connected."})
+
+@app.route('/api/get_photos')
+def get_photos():
+    global result
+    try:
         path = result["data"]["save_path"]
         return send_file(path_or_file=path, mimetype="image/jpeg")
-
-    else:
+    except Exception as e:
         return json.dumps({"status": "error", "message": "Camera is not connected."})
 
 
