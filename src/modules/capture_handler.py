@@ -87,11 +87,15 @@ class CaptureHandler:
                 file_path = self.__camera_manager.get_camera().capture(gp.GP_CAPTURE_IMAGE)
                 self.__logger.debug(f'[{method_name}] Camera captured image at: {file_path.folder}/{file_path.name}')
 
+                return sdict(True, message="Success")
+
+                """
                 download_result = self._download_image(file_path, save_path)
                 
                 if download_result["success"]:
                     self.__logger.info(f'[{method_name}] Image capture successful: {save_path}')
                     return download_result
+                """
 
                 self.__logger.warning(f'[{method_name}] Download failed, retrying in {self.__retry_delay} seconds')
                 time.sleep(self.__retry_delay)

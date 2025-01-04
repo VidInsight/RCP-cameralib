@@ -1,8 +1,8 @@
 from flask import Flask, send_file, request
 import json
+
 from src.modules.camera_manager import CameraManager
 from src.modules.config_handler import ConfigHandler
-
 from src.modules.capture_handler import CaptureHandler
 
 app = Flask(__name__)
@@ -18,7 +18,6 @@ config = {
     'whitebalance': None
 }
 
-result = None
 
 @app.route('/api/connect')
 def connect_to_cam():
@@ -54,7 +53,6 @@ def summary_camera():
 
 @app.route('/api/test')
 def test_camera():
-    global result
     if camera_manager.is_connected and camera_capture.wait_until_ready():
         result = camera_capture.capture_preview()
         return json.dumps({"status": "success", "message": "Photo captured successfully."})
